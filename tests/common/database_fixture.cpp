@@ -158,8 +158,6 @@ database_fixture::database_fixture()
     options.insert(std::make_pair("api-limit-get-key-references", boost::program_options::variable_value((uint64_t)200, false)));
     options.insert(std::make_pair("plugins", boost::program_options::variable_value(string("account_history"), false)));
    }
-
-
    // add account tracking for ahplugin for special test case with track-account enabled
    if( !options.count("track-account") && current_test_name == "track_account") {
       std::vector<std::string> track_account;

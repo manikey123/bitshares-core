@@ -337,7 +337,7 @@ void application_impl::set_api_limit() {
        _app_options.api_limit_get_asset_holders = _options->at("api-limit-get-asset-holders").as<uint64_t>();
    }
    if(_options->count("api-limit-get-key-references")){
-	_app_options.api_limit_get_key_references = _options->at("api-limit-get-key-references").as<uint64_t>();
+       _app_options.api_limit_get_key_references = _options->at("api-limit-get-key-references").as<uint64_t>();
    }
 }
 
@@ -1015,7 +1015,7 @@ void application::set_program_options(boost::program_options::options_descriptio
          ("api-limit-get-asset-holders",boost::program_options::value<uint64_t>()->default_value(100),
           "For asset_api::get_asset_holders to set its default limit value as 100")
          ("api-limit-get-key-references",boost::program_options::value<uint64_t>()->default_value(100),
-	  "For database_api_impl::get_key_references to set its default limit value as 100")
+          "For database_api_impl::get_key_references to set its default limit value as 100")
          ;
    command_line_options.add(configuration_file_options);
    command_line_options.add_options()
@@ -1058,6 +1058,18 @@ void application::set_api_limit()
 {
    try {
       my->set_api_limit();
+   } catch ( const fc::exception& e ) {
+      elog( "${e}", ("e",e.to_detail_string()) );
+      throw;
+   } catch ( ... ) {
+      elog( "unexpected exception" );
+      throw;
+   }
+}
+void application::set_dgb_api_limit_api()
+{
+   try {
+      my->set_dgb_api_limit_api();
    } catch ( const fc::exception& e ) {
       elog( "${e}", ("e",e.to_detail_string()) );
       throw;
